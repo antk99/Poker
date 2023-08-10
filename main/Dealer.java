@@ -2,31 +2,29 @@ package main;
 
 import java.util.ArrayList;
 
+import main.interfaces.CardSource;
+
 /**
  * Poker dealer that deals cards, and determines the winner.
  */
 public class Dealer {
 
-    private Deck deck;
-    private ArrayList<Card> communityCards = new ArrayList<>();
-    private final ArrayList<Player> players;
+    private final CardSource cardSource;
+    private final ArrayList<Card> communityCards = new ArrayList<>();
+    private final ArrayList<Player> players = new ArrayList<>();
 
     /**
-     * Constructor for Dealer. Creates a new deck and initializes the list of
-     * players.
+     * Constructor for Dealer.
      */
-    public Dealer() {
-        this.deck = new Deck();
-        this.players = new ArrayList<>();
+    public Dealer(CardSource cardSource) {
+        this.cardSource = cardSource;
     }
 
     /**
-     * Constructor for Dealer that takes in a list of players. Creates a new deck
-     * and initializes the list of players.
+     * Constructor for Dealer that also takes in a list of players.
      */
-    public Dealer(ArrayList<Player> players) {
-        this.deck = new Deck();
-        this.players = new ArrayList<Player>(players);
+    public Dealer(CardSource cardSource, ArrayList<Player> players) {
+        this.cardSource = cardSource;
     }
 
     /**
@@ -35,7 +33,7 @@ public class Dealer {
      * @return List of players at the table
      */
     public ArrayList<Player> getPlayers() {
-        return this.players;
+        return new ArrayList<Player>(players);
     }
 
     /**
@@ -61,7 +59,7 @@ public class Dealer {
      */
     public void deal() {
         for (Player player : this.players) {
-            player.dealCards(this.deck.draw(), this.deck.draw());
+            player.dealCards(this.cardSource.draw(), this.cardSource.draw());
         }
     }
 
@@ -69,7 +67,7 @@ public class Dealer {
      * Shuffles the deck and clears the community cards.
      */
     public void shuffle() {
-        this.deck = new Deck();
+        this.cardSource.reset();
         this.communityCards.clear();
     }
 
@@ -81,7 +79,7 @@ public class Dealer {
      */
     private ArrayList<Card> dealCommunityCards(int n) {
         for (int i = 0; i < n; i++) {
-            this.communityCards.add(this.deck.draw());
+            this.communityCards.add(this.cardSource.draw());
         }
         return new ArrayList<Card>(communityCards);
     }
@@ -184,7 +182,7 @@ public class Dealer {
     @Override
     public String toString() {
         return "Dealer{" +
-                "deck=" + this.deck +
+                "deck=" + this.cardSource +
                 ", players=" + this.players +
                 '}';
     }
