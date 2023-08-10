@@ -50,4 +50,16 @@ public class Hand {
     public int getScore() {
         return this.score;
     }
+
+    @Override
+    public String toString() {
+        String str = "[";
+        for (Card card : this.bestHand) {
+            str += card.toString() + " ";
+        }
+        str = str.substring(0, str.length() - 1); // remove last space
+        str += "] ";
+        str += this.handRank.toString();
+        return str;
+    }
 }
