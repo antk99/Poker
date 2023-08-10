@@ -30,4 +30,17 @@ public class Utils {
         return new Rank[] { lowestRank, highestRank };
     }
 
+    /**
+     * Prints the progress of a loop. Prints a message every 5% of the total loop
+     * iterations.
+     * 
+     * @param currentIteration The current iteration of the loop
+     * @param totalIterations  The total number of iterations in the loop
+     */
+    public static void printProgress(int currentIteration, int totalIterations) {
+        if (currentIteration % ((5 / 100.0) * totalIterations) == 0) {
+            int percentComplete = (int) (currentIteration / (float) totalIterations * 100);
+            System.out.println(percentComplete + "% complete");
+        }
+    }
 }
