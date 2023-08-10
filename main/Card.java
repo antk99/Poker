@@ -1,5 +1,7 @@
 package main;
 
+import java.util.Comparator;
+
 /**
  * Card class. Represents a playing card. The Card class follows the Flyweight
  * pattern to ensure that only one instance of each card is created. The Card
@@ -58,4 +60,37 @@ public class Card {
     public Suit getSuit() {
         return this.suit;
     }
+
+    // Comparator for sorting cards by rank in ascending order
+    public static final Comparator<Card> sortByRankComparatorASC = new Comparator<Card>() {
+        @Override
+        public int compare(Card c1, Card c2) {
+            if (c1.getRank() != c2.getRank())
+                return c1.getRank().ordinal() - c2.getRank().ordinal();
+            else
+                return c1.getSuit().ordinal() - c2.getSuit().ordinal();
+        }
+    };
+
+    // Comparator for sorting cards by rank in descending order
+    public static final Comparator<Card> sortByRankComparatorDESC = new Comparator<Card>() {
+        @Override
+        public int compare(Card c1, Card c2) {
+            if (c1.getRank() != c2.getRank())
+                return c2.getRank().ordinal() - c1.getRank().ordinal();
+            else
+                return c1.getSuit().ordinal() - c2.getSuit().ordinal();
+        }
+    };
+
+    // Comparator for sorting cards by suit
+    public static final Comparator<Card> sortBySuitComparator = new Comparator<Card>() {
+        @Override
+        public int compare(Card c1, Card c2) {
+            if (c1.getSuit() != c2.getSuit())
+                return c1.getSuit().ordinal() - c2.getSuit().ordinal();
+            else
+                return c1.getRank().ordinal() - c2.getRank().ordinal();
+        }
+    };
 }
