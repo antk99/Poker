@@ -16,6 +16,17 @@ public class Player {
     }
 
     /**
+     * Copy constructor for player.
+     * 
+     * @param player Player to copy
+     */
+    public Player(Player player) {
+        this.playerid = player.playerid;
+        this.dealtCards = player.dealtCards;
+        this.hand = new Hand(player.hand);
+    }
+
+    /**
      * Sets the 2 cards dealt to the player and clears the hand.
      * 
      * @param card1
@@ -38,7 +49,9 @@ public class Player {
     }
 
     public String toString() {
-        return "Player #" + this.playerid;
+        String baseString = "P" + this.playerid;
+        return this.hand == null ? baseString
+                : baseString + " [" + this.dealtCards[0] + " " + this.dealtCards[1] + "] " + this.hand.toString();
     }
 
     public Hand getHand() {
