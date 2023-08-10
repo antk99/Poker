@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 import logging.interfaces.PokerLogger;
 import main.Card;
+import main.HandRank;
 import main.Player;
 import main.Rank;
 
@@ -17,6 +18,7 @@ public class StatsLogger implements PokerLogger {
 
     protected final HashMap<Rank, HashMap<Rank, StatsLog>> suitedStats = new HashMap<>(); // For suited hole cards
     protected final HashMap<Rank, HashMap<Rank, StatsLog>> unsuitedStats = new HashMap<>(); // For unsuited hole cards
+    protected final HashMap<HandRank, StatsLog> handRankStats = new HashMap<>(); // For hand ranks
 
     /**
      * Adds a hand to the log.
@@ -59,6 +61,15 @@ public class StatsLogger implements PokerLogger {
 
             StatsLog statsLog = stats2.get(rank2);
             statsLog.addStat(isWinner);
+
+            // Hand rank stats
+            HandRank handRank = player.getHand().getHandRank();
+            if (!handRankStats.containsKey(handRank)) {
+                handRankStats.put(handRank, new StatsLog());
+            }
+
+            StatsLog handRankStatsLog = handRankStats.get(handRank);
+            handRankStatsLog.addStat(isWinner);
         }
     }
 

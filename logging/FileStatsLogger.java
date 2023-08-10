@@ -4,6 +4,7 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import main.HandRank;
 import main.Rank;
 
 /**
@@ -95,6 +96,26 @@ public class FileStatsLogger extends StatsLogger {
             }
             writer.close();
             System.out.println("Logs written to " + this.rootFilename + "unsuited.txt");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(this.rootFilename + "handranks.txt"))) {
+            writer.write("Hand Rank,Number Dealt,Number Won,Win Percentage\n");
+
+            // Write the hand ranks
+            for (HandRank handRank : this.handRankStats.keySet()) {
+                StatsLog handRankStatsLog = this.handRankStats.get(handRank);
+
+                int numDealt = handRankStatsLog.getNumDealt();
+                int numWon = handRankStatsLog.getNumWon();
+
+                double winPercentage = (double) numWon / numDealt;
+
+                writer.write(handRank + "," + numDealt + "," + numWon + "," + winPercentage + "\n");
+            }
+            writer.close();
+            System.out.println("Logs written to " + this.rootFilename + "handranks.txt");
         } catch (IOException e) {
             e.printStackTrace();
         }
