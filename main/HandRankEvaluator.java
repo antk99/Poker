@@ -25,7 +25,7 @@ public class HandRankEvaluator {
 
     public HandRankEvaluator(ArrayList<Card> cards) {
         ArrayList<Card> cardsCopy = new ArrayList<>(cards);
-        cardsCopy.sort(Deck.sortByRankComparatorDESC);
+        cardsCopy.sort(Card.sortByRankComparatorDESC);
         this.cards = Collections.unmodifiableList(cardsCopy);
 
         this.rankCounts = getRankCounts(this.cards);
@@ -314,7 +314,7 @@ public class HandRankEvaluator {
      * @return score for the flush
      */
     private static int getFlushScore(ArrayList<Card> cards) {
-        cards.sort(Deck.sortByRankComparatorASC);
+        cards.sort(Card.sortByRankComparatorASC);
         int score = 0;
         for (int i = 0; i < cards.size(); i++) {
             score += cards.get(i).getRank().ordinal() * Math.pow(100, i);
@@ -391,7 +391,7 @@ public class HandRankEvaluator {
      * @return score for the three of a kind
      */
     private static int getThreeOfAKindScore(Rank threeOfAKindRank, ArrayList<Card> best5Cards) {
-        best5Cards.sort(Deck.sortByRankComparatorASC);
+        best5Cards.sort(Card.sortByRankComparatorASC);
         int score = threeOfAKindRank.ordinal() * (int) Math.pow(100, 2);
         for (int i = 0, j = 0; i < best5Cards.size(); i++) {
             if (best5Cards.get(i).getRank() != threeOfAKindRank) {
@@ -525,7 +525,7 @@ public class HandRankEvaluator {
      * @return score for the pair
      */
     private static int getPairScore(Rank pairRank, ArrayList<Card> best5Cards) {
-        best5Cards.sort(Deck.sortByRankComparatorASC);
+        best5Cards.sort(Card.sortByRankComparatorASC);
         int score = pairRank.ordinal() * (int) Math.pow(100, 3);
         for (int i = 0, j = 0; i < best5Cards.size(); i++) {
             if (best5Cards.get(i).getRank() != pairRank) {
@@ -558,7 +558,7 @@ public class HandRankEvaluator {
      * @return score for the high card
      */
     private int getHighCardScore(ArrayList<Card> best5Cards) {
-        best5Cards.sort(Deck.sortByRankComparatorASC);
+        best5Cards.sort(Card.sortByRankComparatorASC);
         int score = 0;
         for (int i = 0; i < best5Cards.size(); i++) {
             score += best5Cards.get(i).getRank().ordinal() * Math.pow(100, i);
